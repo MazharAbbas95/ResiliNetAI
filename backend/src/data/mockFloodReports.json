@@ -1,0 +1,182 @@
+[
+  {
+    "id": "report-001",
+    "text": "Main road completely flooded near Data Darbar underpass, cars stuck",
+    "locationName": "Lahore",
+    "coordinates": {
+      "lat": 31.5586,
+      "lng": 74.3101
+    },
+    "severity": "critical",
+    "timestamp": 1747350000,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-002",
+    "text": "Canal Road waterlogged, knee-deep water near Gulberg roundabout",
+    "locationName": "Lahore",
+    "coordinates": {
+      "lat": 31.5204,
+      "lng": 74.3587
+    },
+    "severity": "high",
+    "timestamp": 1747349400,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-003",
+    "text": "Drainage overflow spotted near DHA Phase 5 main boulevard",
+    "locationName": "Lahore",
+    "coordinates": {
+      "lat": 31.4697,
+      "lng": 74.4097
+    },
+    "severity": "medium",
+    "timestamp": 1747348800,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-004",
+    "text": "Heavy rain accumulation on Model Town Link Road, traffic stopped",
+    "locationName": "Lahore",
+    "coordinates": {
+      "lat": 31.4832,
+      "lng": 74.3296
+    },
+    "severity": "high",
+    "timestamp": 1747348200,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-005",
+    "text": "Street flooded outside Lahore Railway Station, pedestrians struggling",
+    "locationName": "Lahore",
+    "coordinates": {
+      "lat": 31.5595,
+      "lng": 74.3196
+    },
+    "severity": "medium",
+    "timestamp": 1747347600,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-006",
+    "text": "Water accumulation near Johar Town Expo Center intersection",
+    "locationName": "Lahore",
+    "coordinates": {
+      "lat": 31.4699,
+      "lng": 74.2697
+    },
+    "severity": "low",
+    "timestamp": 1747347000,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-007",
+    "text": "CRITICAL: Ring Road flooded, multiple vehicles stranded near Thokar Niaz Baig",
+    "locationName": "Lahore",
+    "coordinates": {
+      "lat": 31.4282,
+      "lng": 74.3101
+    },
+    "severity": "critical",
+    "timestamp": 1747346400,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-008",
+    "text": "Blocked storm drain causing overflow on Ferozepur Road near Chungi",
+    "locationName": "Lahore",
+    "coordinates": {
+      "lat": 31.5087,
+      "lng": 74.3001
+    },
+    "severity": "high",
+    "timestamp": 1747345800,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-009",
+    "text": "Minor water pooling in Bahria Town Phase 4, monitoring situation",
+    "locationName": "Rawalpindi",
+    "coordinates": {
+      "lat": 33.5182,
+      "lng": 73.1427
+    },
+    "severity": "low",
+    "timestamp": 1747345200,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-010",
+    "text": "Murree Road completely blocked, flash flooding reported near Committee Chowk",
+    "locationName": "Rawalpindi",
+    "coordinates": {
+      "lat": 33.5651,
+      "lng": 73.0169
+    },
+    "severity": "critical",
+    "timestamp": 1747344600,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-011",
+    "text": "Heavy rain causing roof leaks in low-lying area near Sadr, Rawalpindi",
+    "locationName": "Rawalpindi",
+    "coordinates": {
+      "lat": 33.5987,
+      "lng": 73.0479
+    },
+    "severity": "medium",
+    "timestamp": 1747344000,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-012",
+    "text": "Nullah Lai rising rapidly, residents evacuating near Dhoke Syedan",
+    "locationName": "Rawalpindi",
+    "coordinates": {
+      "lat": 33.6007,
+      "lng": 73.0582
+    },
+    "severity": "critical",
+    "timestamp": 1747343400,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-013",
+    "text": "Roads impassable near Clifton Bridge, severe urban flooding",
+    "locationName": "Karachi",
+    "coordinates": {
+      "lat": 24.8122,
+      "lng": 67.0299
+    },
+    "severity": "high",
+    "timestamp": 1747342800,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-014",
+    "text": "Water entering homes in Korangi area, families seeking higher ground",
+    "locationName": "Karachi",
+    "coordinates": {
+      "lat": 24.8305,
+      "lng": 67.1287
+    },
+    "severity": "critical",
+    "timestamp": 1747342200,
+    "source": "mock-social"
+  },
+  {
+    "id": "report-015",
+    "text": "Drainage system overwhelmed near II Chundrigar Road",
+    "locationName": "Karachi",
+    "coordinates": {
+      "lat": 24.8607,
+      "lng": 67.0104
+    },
+    "severity": "medium",
+    "timestamp": 1747341600,
+    "source": "mock-social"
+  }
+]
