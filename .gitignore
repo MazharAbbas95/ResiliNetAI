@@ -2,3 +2,5 @@ node_modules/
 dist/
 .env
 firebase-service-account.json
+backend/firebase-services-account.json
+backend/firebase-service-account.json
