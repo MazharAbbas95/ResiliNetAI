@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const alertController_1 = require("@/controllers/alertController");
+const catchAsync_1 = require("@/utils/catchAsync");
+const validationMiddleware_1 = require("@/middleware/validationMiddleware");
+const alertValidator_1 = require("@/validators/alertValidator");
+const router = (0, express_1.Router)();
+router.get('/', (0, catchAsync_1.catchAsync)(alertController_1.getAlerts));
+router.get('/active', (0, catchAsync_1.catchAsync)(alertController_1.getActiveAlerts));
+router.post('/send', (0, validationMiddleware_1.validateRequest)(alertValidator_1.sendAlertSchema), (0, catchAsync_1.catchAsync)(alertController_1.sendAlert));
+router.post('/broadcast', (0, validationMiddleware_1.validateRequest)(alertValidator_1.sendAlertSchema), (0, catchAsync_1.catchAsync)(alertController_1.broadcastAlert));
+router.post('/remove/:id', (0, catchAsync_1.catchAsync)(alertController_1.removeAlert));
+exports.default = router;

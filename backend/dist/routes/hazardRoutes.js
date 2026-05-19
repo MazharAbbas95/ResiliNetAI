@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const hazardController_1 = require("@/controllers/hazardController");
+const catchAsync_1 = require("@/utils/catchAsync");
+const validationMiddleware_1 = require("@/middleware/validationMiddleware");
+const hazardValidator_1 = require("@/validators/hazardValidator");
+const router = (0, express_1.Router)();
+router.get('/', (0, catchAsync_1.catchAsync)(hazardController_1.getHazards));
+router.get('/active', (0, catchAsync_1.catchAsync)(hazardController_1.getActiveHazards));
+router.get('/:id', (0, catchAsync_1.catchAsync)(hazardController_1.getHazardById));
+router.post('/create', (0, validationMiddleware_1.validateRequest)(hazardValidator_1.createHazardSchema), (0, catchAsync_1.catchAsync)(hazardController_1.createHazard));
+router.post('/update/:id', (0, validationMiddleware_1.validateRequest)(hazardValidator_1.updateHazardSchema), (0, catchAsync_1.catchAsync)(hazardController_1.updateHazard));
+router.post('/remove/:id', (0, catchAsync_1.catchAsync)(hazardController_1.removeHazard));
+exports.default = router;

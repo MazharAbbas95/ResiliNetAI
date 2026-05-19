@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const weatherController_1 = require("@/controllers/weatherController");
+const catchAsync_1 = require("@/utils/catchAsync");
+const router = (0, express_1.Router)();
+router.get('/current', (0, catchAsync_1.catchAsync)(weatherController_1.getCurrentWeather));
+router.get('/forecast', (0, catchAsync_1.catchAsync)(weatherController_1.getForecast));
+router.get('/risk', (0, catchAsync_1.catchAsync)(weatherController_1.getWeatherRisk));
+exports.default = router;

@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const systemController_1 = require("@/controllers/systemController");
+const catchAsync_1 = require("@/utils/catchAsync");
+const router = (0, express_1.Router)();
+router.get('/status', (0, catchAsync_1.catchAsync)(systemController_1.getStatus));
+router.get('/health', (0, catchAsync_1.catchAsync)(systemController_1.getHealth));
+router.get('/realtime', (0, catchAsync_1.catchAsync)(systemController_1.getRealtimeStatus));
+exports.default = router;

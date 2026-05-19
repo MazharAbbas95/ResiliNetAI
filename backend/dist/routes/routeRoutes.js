@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const routeController_1 = require("@/controllers/routeController");
+const catchAsync_1 = require("@/utils/catchAsync");
+const validationMiddleware_1 = require("@/middleware/validationMiddleware");
+const aiValidator_1 = require("@/validators/aiValidator");
+const router = (0, express_1.Router)();
+router.post('/safe-route', (0, validationMiddleware_1.validateRequest)(aiValidator_1.getSafeRouteSchema), (0, catchAsync_1.catchAsync)(routeController_1.getSafeRoute));
+router.post('/avoid-hazard', (0, catchAsync_1.catchAsync)(routeController_1.avoidHazardRoute));
+exports.default = router;
