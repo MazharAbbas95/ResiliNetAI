@@ -4,8 +4,7 @@ const { getDefaultConfig } = require('expo/metro-config');
 const config = getDefaultConfig(__dirname);
 
 config.resolver.blockList = [
-  /backend\/.*/,
-  /node_modules\/.*\/node_modules\/fbjs.*/
+  /\/backend\/.*/,
 ];
 
 module.exports = config;

@@ -1,3 +1,5 @@
 backend/
 backend/node_modules/
 backend/dist/
+**/firebase-service-account.json
+**/firebase-services-account.json
