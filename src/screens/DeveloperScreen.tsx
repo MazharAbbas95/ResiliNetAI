@@ -5,6 +5,7 @@ import { ScreenWrapper } from '@components/ui/ScreenWrapper';
 import { GlassCard } from '@components/ui/GlassCard';
 import { useOrchestrationStore } from '../store/orchestrationStore';
 import { Ionicons } from '@expo/vector-icons';
+import FrontendHealthCheck from './FrontendHealthCheck';
 
 export const DeveloperScreen = () => {
   const { logs, metrics } = useOrchestrationStore();
@@ -23,6 +24,7 @@ export const DeveloperScreen = () => {
 
   return (
     <ScreenWrapper>
+      <FrontendHealthCheck />
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>DEV OBSERVABILITY</Text>

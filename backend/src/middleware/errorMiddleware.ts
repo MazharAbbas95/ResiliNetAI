@@ -20,5 +20,9 @@ export const notFoundHandler = (
   res: Response,
   next: NextFunction
 ): void => {
-  sendError(res, new Error('Route not found'), 'Route not found', 404);
+  console.warn(`[NotFound] ${req.method} ${req.originalUrl}`);
+  const err = new Error('Route not found');
+  // attach requested path for easier debugging (non-sensitive)
+  (err as any).requestedPath = req.originalUrl;
+  sendError(res, err, 'Route not found', 404);
 };

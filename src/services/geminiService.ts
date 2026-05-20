@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { Platform } from 'react-native';
-import Constants from 'expo-constants';
+import API_BASE_URL from '@config/api';
 
 export interface GeminiAnalysis {
   hazardAssessment: {
@@ -19,32 +18,7 @@ export interface GeminiAnalysis {
   };
 }
 
-const getApiUrl = () => {
-  if (Platform.OS === 'web' && typeof window !== 'undefined') {
-    const hostname = window.location.hostname || '127.0.0.1';
-    return `http://${hostname}:5000/api/gemini-analysis`;
-  }
-  
-  let host = '127.0.0.1';
-  try {
-    const manifest = (Constants.expoConfig as any) || (Constants as any).manifest;
-    const debuggerHost = manifest?.debuggerHost || manifest?.hostUri;
-    if (debuggerHost) {
-      host = debuggerHost.split(':').shift() || '127.0.0.1';
-    }
-  } catch (e) {
-    console.warn('[GeminiService] Could not resolve host IP via expo-constants, using fallback.');
-  }
-
-  // Fallback to standard loopbacks if no local network IP could be detected
-  if (host === '127.0.0.1' || !host) {
-    return Platform.OS === 'android'
-      ? 'http://10.0.2.2:5000/api/gemini-analysis'
-      : 'http://127.0.0.1:5000/api/gemini-analysis';
-  }
-
-  return `http://${host}:5000/api/gemini-analysis`;
-};
+const getApiUrl = () => `${API_BASE_URL}/api/gemini-analysis`;
 
 export const geminiService = {
   /**
