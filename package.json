@@ -7,7 +7,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "start:backend": "node backend/dist/server.js",
+    "prestart:backend": "node -e \"const fs = require('fs'); fs.mkdirSync('backend/dist/config', { recursive: true }); if (process.env.FIREBASE_CREDENTIALS) { fs.writeFileSync('backend/dist/config/firebase-service-account.json', process.env.FIREBASE_CREDENTIALS); console.log('Wrote credentials from environment variable.'); } else if (fs.existsSync('backend/firebase-services-account.json')) { fs.copyFileSync('backend/firebase-services-account.json', 'backend/dist/config/firebase-service-account.json'); console.log('Copied physical file to destination.'); } else { console.log('Warning: No Firebase credentials identified.'); }\"",
+    "start:backend": "npm run prestart:backend && node -r module-alias/register backend/dist/server.js",
     "dev:backend": "ts-node-dev --respawn --transpile-only --project backend/tsconfig.json -r tsconfig-paths/register backend/src/server.ts"
   },
   "dependencies": {
