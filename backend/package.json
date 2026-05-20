@@ -10,7 +10,8 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "firebase-admin": "^13.10.0",
-    "module-alias": "^2.3.4"
+    "module-alias": "^2.3.4",
+    "zod": "^4.4.3"
   },
   "_moduleAliases": {
     "@": "dist"
