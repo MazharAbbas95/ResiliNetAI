@@ -1,17 +1,25 @@
-import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 import * as Device from 'expo-device';
-import Constants from 'expo-constants';
+import Constants, { ExecutionEnvironment } from 'expo-constants';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: false,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  } as any),
-});
+const isExpoGoClient = Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
+
+const loadNotifications = async () => {
+  if (isExpoGoClient) {
+    return null;
+  }
+  const Notifications = await import('expo-notifications');
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: false,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
+    } as any),
+  });
+  return Notifications;
+};
 
 export const FCMManager = {
   /**
@@ -19,10 +27,20 @@ export const FCMManager = {
    * Uses a safe local mock token in development to prevent Expo SDK 53 crashes.
    */
   registerForPushNotificationsAsync: async (): Promise<string | undefined> => {
+    if (isExpoGoClient) {
+      console.log('Skipping native push setup inside Expo Go client.');
+      return 'mock-expo-go-token';
+    }
+
     // 1. FAST BYPASS FOR EXPO GO / LOCAL DEVELOPMENT
     if (__DEV__) {
       console.log('[FCMManager] Development environment detected. Using mock push token.');
       return 'ExponentPushToken[MOCK_DEV_TOKEN_LOCAL]';
+    }
+
+    const Notifications = await loadNotifications();
+    if (!Notifications) {
+      return 'mock-expo-go-token';
     }
 
     // 2. PRODUCTION BUILD ENGINE (Runs on standalone native builds)
@@ -70,6 +88,12 @@ export const FCMManager = {
    * Schedules a local notification alert instantly.
    */
   sendLocalNotification: async (title: string, body: string, priority: 'default' | 'high' | 'max') => {
+    const Notifications = await loadNotifications();
+    if (!Notifications) {
+      console.warn('[FCMManager] Local notification skipped in Expo Go client.');
+      return;
+    }
+
     await Notifications.scheduleNotificationAsync({
       content: {
         title,

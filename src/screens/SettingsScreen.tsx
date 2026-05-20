@@ -9,7 +9,7 @@ import { useSettingsStore } from '@store/settingsStore';
 import { useOrchestrationStore } from '@store/orchestrationStore';
 import { useHazardStore } from '@store/hazardStore';
 import { useInfraHealthStore } from '@store/infraHealthStore';
-import * as Notifications from 'expo-notifications';
+import Constants, { ExecutionEnvironment } from 'expo-constants';
 import * as Location from 'expo-location';
 import { sharedMemory } from '../agents/core/AgentMemory';
 
@@ -30,9 +30,14 @@ export const SettingsScreen = () => {
   useEffect(() => {
     const checkPermissions = async () => {
       try {
-        const notifyRes = await Notifications.getPermissionsAsync();
-        setNotificationPerm(notifyRes.status);
-        
+        if (Constants.executionEnvironment !== ExecutionEnvironment.StoreClient) {
+          const Notifications = await import('expo-notifications');
+          const notifyRes = await Notifications.getPermissionsAsync();
+          setNotificationPerm(notifyRes.status);
+        } else {
+          setNotificationPerm('undetermined');
+        }
+
         const gpsRes = await Location.getForegroundPermissionsAsync();
         setGpsPerm(gpsRes.status);
       } catch (e) {

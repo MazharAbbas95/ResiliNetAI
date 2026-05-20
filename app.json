@@ -7,7 +7,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
-    "newArchEnabled": false,
     "extra": {
       "firebaseApiKey": "YOUR_API_KEY",
       "firebaseAuthDomain": "YOUR_AUTH_DOMAIN",
