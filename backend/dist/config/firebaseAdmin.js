@@ -9,9 +9,17 @@ const env_1 = require("./env");
 // Initialize Firebase Admin SDK as a singleton
 if (!firebase_admin_1.default.apps.length) {
     try {
-        if (env_1.ENV.FIREBASE_SERVICE_ACCOUNT_PATH) {
+        if (process.env.FIREBASE_CREDENTIALS) {
+            const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+            firebase_admin_1.default.initializeApp({
+                credential: firebase_admin_1.default.credential.cert(serviceAccount),
+            });
+            console.log('[Firebase Admin] Initialized successfully via environment variable.');
+        }
+        else if (env_1.ENV.FIREBASE_SERVICE_ACCOUNT_PATH) {
             // Load from local file in development
-            const serviceAccount = require(env_1.ENV.FIREBASE_SERVICE_ACCOUNT_PATH);
+            const serviceAccountPath = require('path').resolve(__dirname, '../../', env_1.ENV.FIREBASE_SERVICE_ACCOUNT_PATH);
+            const serviceAccount = require(serviceAccountPath);
             firebase_admin_1.default.initializeApp({
                 credential: firebase_admin_1.default.credential.cert(serviceAccount),
             });

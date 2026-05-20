@@ -5,7 +5,14 @@ import { ENV } from './env';
 // Initialize Firebase Admin SDK as a singleton
 if (!admin.apps.length) {
   try {
-    if (ENV.FIREBASE_SERVICE_ACCOUNT_PATH) {
+    if (process.env.FIREBASE_CREDENTIALS) {
+      // Load directly from environment variable in cloud environments
+      const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+      admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+      });
+      console.log('[Firebase Admin] Initialized successfully via environment variable.');
+    } else if (ENV.FIREBASE_SERVICE_ACCOUNT_PATH) {
       // Load from local file in development
       // Resolve path relative to backend root (one level up from config)
       const serviceAccountPath = path.resolve(__dirname, '../../', ENV.FIREBASE_SERVICE_ACCOUNT_PATH);
