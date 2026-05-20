@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "CommonJS",
+    "module": "Node16",
     "lib": ["ES2020"],
     "baseUrl": "./src",
     "paths": {
@@ -9,9 +9,10 @@
     },
     "strict": true,
     "esModuleInterop": true,
+    "ignoreDeprecations": "6.0",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "outDir": "./dist"
