@@ -123,7 +123,7 @@ export const weatherService = {
 
     try {
       const startTime = Date.now();
-      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&APPID=${OPENWEATHER_API_KEY}`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&APPID=${OPENWEATHER_API_KEY}`;
       
       console.log(`[WeatherService] Fetching real weather: lat=${lat}, lng=${lng}`);
       const response = await axios.get(url, { timeout: 10000 });
