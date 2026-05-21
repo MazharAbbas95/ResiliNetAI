@@ -1,32 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHealth = void 0;
-const response_1 = require("@/utils/response");
-const firebaseAdmin_1 = require("@/config/firebaseAdmin");
-const getHealth = async (req, res, next) => {
+exports.getBackendHealth = void 0;
+const getBackendHealth = async (req, res) => {
     try {
-        let firebaseStatus = 'Disconnected';
-        try {
-            if (firebaseAdmin_1.adminDb) {
-                // Quick ping to check admin connectivity
-                await firebaseAdmin_1.adminDb.collection('system_ping').limit(1).get();
-                firebaseStatus = 'Connected';
-            }
-        }
-        catch (err) {
-            console.warn('[HealthCheck] Firebase Admin ping failed:', err);
-            firebaseStatus = 'Error';
-        }
-        (0, response_1.sendSuccess)(res, {
-            status: 'OK',
+        const payload = {
+            success: true,
+            service: 'ResiliNet AI Backend',
+            status: 'online',
             uptime: process.uptime(),
             timestamp: new Date().toISOString(),
-            firebase: firebaseStatus,
-            environment: process.env.NODE_ENV
-        });
+            environment: process.env.NODE_ENV || 'development',
+        };
+        res.status(200).json(payload);
     }
     catch (error) {
-        next(error);
+        const response = {
+            success: false,
+            status: 'error',
+            message: 'Health check failed',
+            timestamp: new Date().toISOString(),
+        };
+        res.status(500).json(response);
     }
 };
-exports.getHealth = getHealth;
+exports.getBackendHealth = getBackendHealth;

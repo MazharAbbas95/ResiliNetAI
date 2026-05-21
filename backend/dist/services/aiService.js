@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AIService = void 0;
-const env_1 = require("@/config/env");
+const env_ts_1 = require("../config/env.ts");
 class AIService {
     /**
      * Orchestrates the Gemini AI for hazard assessment and route intelligence.
      */
     static async analyzeSituation(context) {
-        if (!env_1.ENV.GEMINI_API_KEY) {
+        if (!env_ts_1.ENV.GEMINI_API_KEY) {
             console.warn('[AIService] GEMINI_API_KEY missing. Returning mock analysis.');
         }
         // Stub for Google Gemini integration

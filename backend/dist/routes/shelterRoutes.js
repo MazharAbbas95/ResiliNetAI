@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const shelterController_1 = require("@/controllers/shelterController");
-const catchAsync_1 = require("@/utils/catchAsync");
+const shelterController_ts_1 = require("../controllers/shelterController.ts");
+const catchAsync_ts_1 = require("../utils/catchAsync.ts");
 const router = (0, express_1.Router)();
-router.get('/', (0, catchAsync_1.catchAsync)(shelterController_1.getShelters));
-router.get('/nearby', (0, catchAsync_1.catchAsync)(shelterController_1.getNearbyShelters));
-router.post('/create', (0, catchAsync_1.catchAsync)(shelterController_1.createShelter));
-router.post('/update/:id', (0, catchAsync_1.catchAsync)(shelterController_1.updateShelter));
+router.get('/', (0, catchAsync_ts_1.catchAsync)(shelterController_ts_1.getShelters));
+router.get('/nearby', (0, catchAsync_ts_1.catchAsync)(shelterController_ts_1.getNearbyShelters));
+router.post('/create', (0, catchAsync_ts_1.catchAsync)(shelterController_ts_1.createShelter));
+router.post('/update/:id', (0, catchAsync_ts_1.catchAsync)(shelterController_ts_1.updateShelter));
 exports.default = router;

@@ -1,6 +1,7 @@
 {
   "scripts": {
     "prestart": "node -e \"const fs = require('fs'); if (process.env.FIREBASE_CREDENTIALS) { fs.mkdirSync('dist/config', { recursive: true }); fs.writeFileSync('dist/config/firebase-service-account.json', process.env.FIREBASE_CREDENTIALS); fs.writeFileSync('firebase-services-account.json', process.env.FIREBASE_CREDENTIALS); console.log('Successfully wrote Firebase configurations safely.'); }\"",
+    "build": "esbuild src/server.ts --bundle --platform=node --target=node16 --outfile=dist/server.js --external:express --external:cors --external:dotenv --external:@google/generative-ai --external:axios --external:firebase-admin --external:zod --external:module-alias",
     "start": "node -r module-alias/register dist/server.js"
   },
   "dependencies": {
@@ -15,5 +16,8 @@
   },
   "_moduleAliases": {
     "@": "dist"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
   }
 }

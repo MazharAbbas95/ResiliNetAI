@@ -33,7 +33,25 @@ export interface SocialSignalFilters {
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const VALID_SEVERITIES: SignalSeverity[] = ['low', 'medium', 'high', 'critical'];
-const DATA_FILE = path.join(__dirname, '../data/mockFloodReports.json');
+
+const getMockDataPath = (): string => {
+  const paths = [
+    path.join(__dirname, '../data/mockFloodReports.json'), // Dev: running from backend/src/services
+    path.join(__dirname, '../../src/data/mockFloodReports.json'), // Prod Bundled: running server.js from backend/dist
+    path.join(__dirname, './data/mockFloodReports.json'), // Prod Unbundled: running from backend/dist/services
+    path.join(process.cwd(), 'backend/src/data/mockFloodReports.json'), // Running from project root
+    path.join(process.cwd(), 'src/data/mockFloodReports.json'), // Running from backend root
+  ];
+
+  for (const p of paths) {
+    if (fs.existsSync(p)) {
+      return p;
+    }
+  }
+  return paths[0];
+};
+
+const DATA_FILE = getMockDataPath();
 
 // ─── Service ──────────────────────────────────────────────────────────────────
 

@@ -15,6 +15,7 @@ exports.ENV = {
     GEMINI_API_KEY: process.env.GEMINI_API_KEY,
     GOOGLE_MAPS_BACKEND_KEY: process.env.GOOGLE_MAPS_BACKEND_KEY,
     WEATHER_API_KEY: process.env.WEATHER_API_KEY,
+    OPENWEATHER_API_KEY: process.env.OPENWEATHER_API_KEY,
     API_SECRET: process.env.API_SECRET,
     CORS_ORIGIN: process.env.CORS_ORIGIN || '*',
 };

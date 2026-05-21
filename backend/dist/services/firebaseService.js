@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FirebaseService = void 0;
-const firebaseAdmin_1 = require("@/config/firebaseAdmin");
+const firebaseAdmin_ts_1 = require("../config/firebaseAdmin.ts");
 class FirebaseService {
     /**
      * Adds a new hazard zone to Firestore.
      */
     static async createHazard(payload) {
-        const docRef = firebaseAdmin_1.adminDb.collection('hazards').doc();
+        const docRef = firebaseAdmin_ts_1.adminDb.collection('hazards').doc();
         const hazardData = {
             ...payload,
             id: docRef.id,
@@ -24,7 +24,7 @@ class FirebaseService {
      * Dispatches a new emergency alert to Firestore.
      */
     static async createAlert(payload) {
-        const docRef = firebaseAdmin_1.adminDb.collection('alerts').doc();
+        const docRef = firebaseAdmin_ts_1.adminDb.collection('alerts').doc();
         const alertData = {
             ...payload,
             id: docRef.id,

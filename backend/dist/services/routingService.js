@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoutingService = void 0;
-const env_1 = require("@/config/env");
+const env_1 = require("../config/env");
 class RoutingService {
     /**
      * Prepares rerouting logic considering active hazard zones.

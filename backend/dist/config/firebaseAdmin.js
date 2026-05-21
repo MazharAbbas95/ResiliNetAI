@@ -5,12 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminMessaging = exports.adminAuth = exports.adminDb = void 0;
 const firebase_admin_1 = __importDefault(require("firebase-admin"));
-const env_1 = require("./env");
+const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
+const env_1 = require("./env");
 // Initialize Firebase Admin SDK as a singleton
 if (!firebase_admin_1.default.apps.length) {
     try {
         if (process.env.FIREBASE_CREDENTIALS) {
+            // Load directly from environment variable in cloud environments
             const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
             firebase_admin_1.default.initializeApp({
                 credential: firebase_admin_1.default.credential.cert(serviceAccount),
@@ -19,13 +21,13 @@ if (!firebase_admin_1.default.apps.length) {
         }
         else if (env_1.ENV.FIREBASE_SERVICE_ACCOUNT_PATH) {
             // Load from local file in development
-            const serviceAccountPath = require('path').resolve(__dirname, '../../', env_1.ENV.FIREBASE_SERVICE_ACCOUNT_PATH);
+            const serviceAccountPath = path_1.default.resolve(__dirname, '../../', env_1.ENV.FIREBASE_SERVICE_ACCOUNT_PATH);
             if (fs_1.default.existsSync(serviceAccountPath)) {
                 const serviceAccount = require(serviceAccountPath);
                 firebase_admin_1.default.initializeApp({
                     credential: firebase_admin_1.default.credential.cert(serviceAccount),
                 });
-                console.log('[Firebase Admin] Initialized via Service Account JSON.');
+                console.log(`[Firebase Admin] Initialized via: ${serviceAccountPath}`);
             }
             else {
                 throw new Error(`Firebase credentials file not found at: ${serviceAccountPath}.\n` +
@@ -48,6 +50,7 @@ if (!firebase_admin_1.default.apps.length) {
     }
     catch (error) {
         console.error('[Firebase Admin] Initialization Error:', error.message || error);
+        // Explicitly exit with status 1 to prevent app running without database
         process.exit(1);
     }
 }

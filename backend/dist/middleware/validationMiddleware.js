@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateRequest = void 0;
-const response_1 = require("@/utils/response");
+const response_ts_1 = require("../utils/response.ts");
 /**
  * Validates incoming requests against a provided Zod schema.
  */
@@ -18,7 +18,7 @@ const validateRequest = (schema) => {
         catch (error) {
             if (error && error.name === 'ZodError') {
                 const message = error.errors.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ');
-                return (0, response_1.sendError)(res, error.errors, `Validation failed: ${message}`, 400);
+                return (0, response_ts_1.sendError)(res, error.errors, `Validation failed: ${message}`, 400);
             }
             next(error);
         }
