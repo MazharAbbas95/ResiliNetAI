@@ -56,26 +56,65 @@ export const RouteEngine = {
   },
 
   handleRouteError: (errorMessage: string) => {
-    const { setNavigationState } = useNavigationStore.getState();
+    const { setNavigationState, setRoute, routeInfo } = useNavigationStore.getState();
     const { addLog } = useOrchestrationStore.getState();
 
     // MapViewDirections Billing Failure gracefully degrade (Issue 7)
     const isBillingError = errorMessage.toLowerCase().includes('billing') || errorMessage.toLowerCase().includes('denied') || errorMessage.toLowerCase().includes('key');
 
-    setNavigationState('FAILED');
-
     if (isBillingError) {
-      addLog({
-        agent: 'system',
-        message: 'Tactical Routing Unavailable: Maps API Billing Disabled. Degrading to fallback straight-line trajectory.',
-        status: 'warning'
-      });
-    } else {
-      addLog({
-        agent: 'system',
-        message: `Routing Engine Error: ${errorMessage}`,
-        status: 'error'
-      });
+      const { useLocationStore } = require('../store/locationStore');
+      const start = useLocationStore.getState().currentLocation;
+      const destination = routeInfo?.destination;
+
+      if (start && destination) {
+        // Calculate straight line distance (Haversine formula)
+        const lat1 = start.latitude;
+        const lon1 = start.longitude;
+        const lat2 = destination.latitude;
+        const lon2 = destination.longitude;
+
+        const R = 6371; // km
+        const dLat = ((lat2 - lat1) * Math.PI) / 180;
+        const dLon = ((lon2 - lon1) * Math.PI) / 180;
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos((lat1 * Math.PI) / 180) *
+            Math.cos((lat2 * Math.PI) / 180) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+
+        // Estimated duration in minutes assuming 30 km/h average speed
+        const duration = (distance / 30) * 60;
+
+        const fallbackRoute = {
+          distance: `${distance.toFixed(1)} km`,
+          duration: `${Math.round(duration)} mins`,
+          coordinates: [
+            { latitude: start.latitude, longitude: start.longitude },
+            { latitude: destination.latitude, longitude: destination.longitude }
+          ],
+          destination: destination
+        };
+
+        addLog({
+          agent: 'system',
+          message: 'Tactical Routing Unavailable: Maps API Billing Disabled. Degrading to fallback straight-line trajectory.',
+          status: 'warning'
+        });
+
+        setRoute(fallbackRoute);
+        return;
+      }
     }
+
+    setNavigationState('FAILED');
+    addLog({
+      agent: 'system',
+      message: `Routing Engine Error: ${errorMessage}`,
+      status: 'error'
+    });
   }
 };

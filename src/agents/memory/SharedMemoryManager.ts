@@ -74,6 +74,7 @@ export class SharedMemoryManager {
   private eventHistory: AgentEventPayload[] = [];
   private lastUpdated: number = Date.now();
   private syncTimeouts = new Map<string, any>();
+  private lastSyncedStates = new Map<string, string>();
 
   // Callback to publish events dynamically to the AgentEventBus without circular dependencies
   private eventPublisher: ((event: Omit<AgentEventPayload, 'eventId' | 'timestamp'>) => void) | null = null;
@@ -128,6 +129,18 @@ export class SharedMemoryManager {
             console.warn(`[SharedMemoryManager] Failed to delete unverified hazard from Firestore:`, e);
           }
         }
+        return;
+      }
+
+      const cacheKey = JSON.stringify({
+        confidence: hazard.confidence,
+        severity: hazard.severity,
+        lifecycleState: hazard.lifecycleState,
+        verificationState: hazard.verificationState,
+        polygonPoints: hazard.polygonPoints
+      });
+      if (this.lastSyncedStates.get(hazardId) === cacheKey) {
+        console.log(`[SharedMemoryManager] State for ${hazardId} matches last synced state. Skipping duplicate Firestore write.`);
         return;
       }
 
@@ -209,6 +222,7 @@ export class SharedMemoryManager {
           hazard.firebaseId = newDocId;
           console.log(`[SharedMemoryManager] Created Firestore hazard: ${hazard.hazardId} (Firestore ID: ${newDocId})`);
         }
+        this.lastSyncedStates.set(hazardId, cacheKey);
         const syncLatency = Date.now() - syncStart;
         const { useInfraHealthStore: store } = require('../../store/infraHealthStore');
         store.getState().setFirebaseSyncLatency(syncLatency);
@@ -770,6 +784,7 @@ export class SharedMemoryManager {
     this.confidenceMemory.clear();
     this.failedAttempts = {};
     this.eventHistory = [];
+    this.lastSyncedStates.clear();
     this.lastUpdated = Date.now();
   }
 }
